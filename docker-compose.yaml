@@ -12,7 +12,7 @@ services:
       skinclub:
           ipv4_address: 172.33.0.40
     volumes:
-      - ./rep1/:/app
+      - ../rep1/:/app
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
     environment:
       - WEB_DOCUMENT_ROOT=/app/frontend/web
