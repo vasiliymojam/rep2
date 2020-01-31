@@ -1,0 +1,44 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skinclub.local
+    hostname: skinclub.local
+    working_dir: /app
+    depends_on:
+        - db
+    networks:
+      skinclub:
+          ipv4_address: 172.33.0.40
+    volumes:
+      - ./rep1/:/app
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/frontend/web
+      - WEB_DOCUMENT_INDEX=index.php
+      - PHP_DEBUGGER=xdebug
+      - XDEBUG_REMOTE_CONNECT_BACK=1
+      - XDEBUG_PROFILER_ENABLE=0
+
+  frontend-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skinclub-test.local
+    hostname: skinclub-test.local
+    working_dir: /app
+    depends_on:
+        - dbtest
+    networks:
+      skinclub:
+          ipv4_address: 172.33.0.42
+    volumes:
+      - ./rep3:/app
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/frontend/web_new
+      - WEB_DOCUMENT_INDEX=index-test.php
+      - PHP_DEBUGGER=xdebug
+      - XDEBUG_REMOTE_CONNECT_BACK=1
+      - XDEBUG_PROFILER_ENABLE=0 
